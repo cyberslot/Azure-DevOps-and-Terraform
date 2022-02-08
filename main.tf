@@ -1,15 +1,15 @@
 provider "azurerm" {
-    version = "2.5.0"
-    features {}
+  version = "2.5.0"
+  features {}
 }
 
 terraform {
-    backend "azurerm" {
-        resource_group_name  = "tf_rg_blobstore"
-        storage_account_name = "tfstoragebinarythistle"
-        container_name       = "tfstate"
-        key                  = "terraform.tfstate"
-    }
+  backend "azurerm" {
+    resource_group_name  = "tf_rg_blobstore"
+    storage_account_name = "tfstoragebinarythistle"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+  }
 }
 
 variable "imagebuild" {
@@ -34,14 +34,13 @@ resource "azurerm_container_group" "tfcg_test" {
   os_type             = "Linux"
 
   container {
-      name            = "weatherapi"
-      image           = "binarythistle/weatherapi:${var.imagebuild}"
-        cpu             = "1"
-        memory          = "1"
-
-        ports {
-            port        = 80
-            protocol    = "TCP"
-        }
+    name            = "weatherapi"
+    image           = "binarythistle/weatherapi:${var.imagebuild}"
+    cpu             = "1"
+    memory          = "1"
+    ports {
+      port        = 80
+      protocol    = "TCP"
+    }
   }
 }
