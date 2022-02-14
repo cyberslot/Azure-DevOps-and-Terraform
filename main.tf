@@ -1,27 +1,33 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "2.96.0"
+    }
+  }
+}
+
 provider "azurerm" {
-  # version = "2.5.0"
   features {}
 }
 
 terraform {
   backend "azurerm" {
     resource_group_name  = "tf_rg_blobstore"
-    storage_account_name = "tfstoragebinarythistle"
+    storage_account_name = "tfinitstorage"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
   }
 }
 
-variable "imagebuild" {
-  type        = string
-  description = "Latest Image Build"
-}
-
-
+# variable "imagebuild" {
+#   type        = string
+#   description = "Latest Image Build"
+# }
 
 resource "azurerm_resource_group" "tf_test" {
-  name = "tfmainrg"
-  location = "Australia East"
+  name = "tf-inittest-rg"
+  location = "northeurope"
 }
 
 resource "azurerm_container_group" "tfcg_test" {
@@ -30,12 +36,12 @@ resource "azurerm_container_group" "tfcg_test" {
   resource_group_name       = azurerm_resource_group.tf_test.name
 
   ip_address_type     = "public"
-  dns_name_label      = "binarythistlewa"
+  dns_name_label      = "cyberslotwa"
   os_type             = "Linux"
 
   container {
     name            = "weatherapi"
-    image           = "binarythistle/weatherapi:${var.imagebuild}"
+    image           = "cyberslot/weatherapi"#:${var.imagebuild}
     cpu             = "1"
     memory          = "1"
     ports {
