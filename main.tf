@@ -20,10 +20,11 @@ terraform {
   }
 }
 
-# variable "imagebuild" {
-#   type        = string
-#   description = "Latest Image Build"
-# }
+variable "imagebuild" {
+  type        = string
+  description = "Latest Image Build"
+}
+
 
 resource "azurerm_resource_group" "tf_test" {
   name = "tf-inittest-rg"
@@ -41,7 +42,7 @@ resource "azurerm_container_group" "tfcg_test" {
 
   container {
     name            = "weatherapi"
-    image           = "cyberslot/weatherapi"#:${var.imagebuild}
+    image           = "cyberslot/weatherapi:${var.imagebuild}"
     cpu             = "1"
     memory          = "1"
     ports {
